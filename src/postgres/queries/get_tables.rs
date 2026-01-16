@@ -44,7 +44,7 @@ SELECT
          ELSE FALSE
     END AS is_auto_populated,
     -- New field: Array depth determined from pg_attribute.attndims.
-    COALESCE(a.attndims, 0) AS array_depth
+    COALESCE(a.attndims, 0)::SMALLINT AS array_depth
 FROM
     information_schema.columns c
     -- Join to get the table OID from pg_class via pg_namespace
