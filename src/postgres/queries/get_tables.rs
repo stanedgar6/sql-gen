@@ -44,7 +44,7 @@ SELECT
          ELSE FALSE
     END AS is_auto_populated,
     -- New field: Array depth determined from pg_attribute.attndims.
-    a.attndims AS array_depth
+    COALESCE(a.attndims, 0) AS array_depth
 FROM
     information_schema.columns c
     -- Join to get the table OID from pg_class via pg_namespace
@@ -52,9 +52,11 @@ FROM
     JOIN pg_catalog.pg_class cls ON cls.relname = c.table_name
         AND cls.relnamespace = n.oid
     -- Join to get the attribute information, including array dimensions
+    -- Use attname instead of attnum for better compatibility with views
     LEFT JOIN pg_catalog.pg_attribute a
         ON a.attrelid = cls.oid
-        AND a.attnum = c.ordinal_position
+        AND a.attname = c.column_name
+        AND a.attnum > 0
 LEFT JOIN
     (
         SELECT
