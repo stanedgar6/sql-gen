@@ -10,7 +10,7 @@ pub fn convert_data_type(udt_type: &str) -> Option<String> {
 
     match udt_type {
         "bool" | "boolean" => Some("bool".to_string()),
-        "bytea" => Some("u8".to_string()), // is this right?
+        "bytea" => Some("Vec<u8>".to_string()),
         "char" | "bpchar" | "character" => Some("String".to_string()),
         "date" => Some("chrono::NaiveDate".to_string()),
         "float4" | "real" => Some("f32".to_string()),
@@ -36,6 +36,8 @@ pub fn convert_data_type(udt_type: &str) -> Option<String> {
         "hstore" => Some("sqlx::postgres::types::PgHstore".to_string()),
         "bit" | "varbit" => Some("bit_vec::BitVec".to_string()),
         "macaddr" => Some("mac_address::MacAddress".to_string()),
+        "uint8" => Some("sqlx_pg_uint::PgU64".to_string()),
+        "numeric" => Some("bigdecimal::BigDecimal".to_string()),
         _ => None,
     }
 }
