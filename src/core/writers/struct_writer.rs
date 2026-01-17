@@ -39,7 +39,7 @@ fn get_struct_fields_tokens(rust_struct: &RustDbSetStruct) -> Vec<TokenStream> {
 
         let field = quote! {
             #attributes
-            #field_name: #base_type
+            pub #field_name: #base_type
         };
 
         struct_fields_tokens.push(field);
