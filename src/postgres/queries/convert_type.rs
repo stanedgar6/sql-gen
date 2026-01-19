@@ -36,7 +36,7 @@ pub fn convert_data_type(udt_type: &str) -> Option<String> {
         "hstore" => Some("sqlx::postgres::types::PgHstore".to_string()),
         "bit" | "varbit" => Some("bit_vec::BitVec".to_string()),
         "macaddr" => Some("mac_address::MacAddress".to_string()),
-        "uint8" => Some("sqlx_pg_unit128::Uint8".to_string()),
+        "uint8" => Some("sqlx_pg_uint128::Uint8".to_string()),
         "numeric" => Some("bigdecimal::BigDecimal".to_string()),
         _ => None,
     }
